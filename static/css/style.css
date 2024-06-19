@@ -1,13 +1,16 @@
-body{
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    height: 100vh;
-    font-family: 'Roboto', sans-serif;
-    background: rgb(96,104,255);
-    background: linear-gradient(90deg, rgba(96,104,255,1) 0%, rgba(0,172,255,0.332252358490566) 100%, rgba(19,47,145,1) 100%);
-}    
+    font-family: Arial, sans-serif;
+    background-image: url('../images/users_background.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
 
-nav{
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,7 +18,7 @@ nav{
     border-bottom: 1px solid #FFFFFF;
 }
 
-a{
+a {
     font-family: "Kanit", sans-serif;
     font-style: bold;
     font-weight: 300;
@@ -31,71 +34,143 @@ a{
     box-sizing: border-box;
 }
 
-#RegisterProducts, #TableProducts, #h1 {
-    width: 100%;
-    max-width: 1100px;
+.input_form, .productClass {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    flex: 1 1 calc(50% - 5px); /* 50% width with margin between */
+    margin-right: 5px; /* Space between items */
+}
+
+.input_form::placeholder, .productClass option:first-child {
+    color: #d3d3d3;
+}
+
+.input_form:-ms-input-placeholder, .productClass option:first-child {
+    color: #d3d3d3;
+}
+
+.input_form::-ms-input-placeholder, .productClass option:first-child {
+    color: #d3d3d3;
+}
+
+.productClass {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="white" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 8px 10px;
+}
+
+.productClass option {
+    color: black;
+}
+
+.productClass option:checked {
+    color: white;
 }
 
 #RegisterProducts {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    align-items: flex-end; /* Align items to the bottom of the flex container */
+    gap: 10px; /* Space between items */
 }
 
-#RegisterProducts .form-floating {
-    flex: 1 0 150px;
-    margin-right: 10px;  
+#RegisterProducts .form-group {
+    margin-bottom: 10px;
 }
 
-#RegisterProducts {
-    flex: 0 0 auto;  
+.glow-on-hover {
+    text-align: center;
+    align-items: center;
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
-
-.registerButton {
-  background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
-  border-radius: 8px;
-  border-style: none;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  flex-shrink: 0;
-  font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  height: 3.5rem;
-  padding: 0 1.6rem;
-  text-align: center;
-  text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
-  transition: all .5s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-.registerButton:hover {
-  box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
-  transition-duration: .1s;
-}
-@media (min-width: 768px) {
-  .registerButton {
-    padding: 0 2.6rem;
-  }
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
 }
 
+.glow-on-hover:active {
+    color: #000;
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
 
 #TableProducts {
     background-color: transparent;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0 15px;
     text-align: center;
     color: #ffffff;
+    width: 100%;
+    margin-top: 20px; /* Added margin for better separation */
 }
 
 #TableProducts th, #TableProducts td {
     background-color: transparent;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
 }
 
+#TableProducts tr:hover {
+    transform: scale(1.02); /* Scale up the row on hover */
+}
 
 footer {
     display: flex;
@@ -112,4 +187,28 @@ p {
     font-weight: 300;
     text-align: center;
     color: #FFFFFF;
+}
+
+.nav-description{
+    font-family: "Kanit", sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+/* Chroma Effect */
+@keyframes chroma {
+    33.333% { color: #00f2ff; }
+    66.666% { color: #00FFD5; }
+    100% { color: #7A00FF; }
+}
+
+.chroma-effect {
+    display: inline-block;
+}
+
+.chroma-effect span {
+    display: inline-block;
+    animation: chroma 7s infinite alternate;
 }

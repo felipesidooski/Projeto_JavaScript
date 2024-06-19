@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src= "./static/js/cep.js"></script>
     <script src= "./static/js/icms.js"></script>
-    <script src= "./static/js/products.js"></script>
     <script src= "./static/js/register_products.js"></script>
     <link rel="stylesheet" href="./static/css/style.css">
     <!-- Bootstrap CSS via cdn -->
@@ -18,64 +17,60 @@
     <title>Product Register</title>
 </head>
 <body>
-    <nav>
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+<nav>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
             <img src="./static/images/ecommerce.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            My Fake Office e-Commerce - CoderSchool - Register Products page
-          </a>
-        </div>
-    </nav>
-    <div class="container">
-        <h1>Product Register Page</h1>
-        <br/>
-        <form id="RegisterProducts">
-            <div class="form-floating mb-2">
-                <input type="text" class="form-control" id="product" placeholder="Product">
-                <label for="floatingInput">Product</label>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="text" class="form-control" id="unitCost" placeholder="Unit Cost">
-                <label for="floatingInput">Unit Cost</label>
-            </div>
-            <div class="form-floating mb-1">
-                <input type="text" class="form-control" id="salePrice" placeholder="Sale Price">
-                <label for="floatingInput">Sale Price</label>
-            </div>
-            <div class="form-floating">
-                <select class="form-select" id="productClass" aria-label="Product Class">
-                    <option selected>Product Class</option>
-                    <option value="Electronic">Electronic</option>
-                    <option value="Office supplies">Office supplies</option>
-                    <option value="Furniture">Furniture</option>
-                    <option value="Estationary">Estationary</option>
-                </select>
-                <label for="floatingSelect">Product Class</label>
-            </div>
-            <button type="button" class="registerButton" onclick="addProduct()">Register</button>
-        </form>
-        <br/>
-        <h1> </h1>
-        <br/>
-        <table id="TableProducts">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Product</th>
-                <th scope="col">Unit Cost</th>
-                <th scope="col">Class</th>
-                <th scope="col">Sale Price</th>
-                <th scope="col">Taxes</th>
-                <th scope="col">Profit</th>
-                <th scope="col">Profit Margin</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+            <span class="nav-description">My Fake Office e-Commerce - CoderSchool - Register Products page</span>
+        </a>
     </div>
-    <footer>
-        <p>Equipe: Felipe Sidooski / Fellype Bardales / Gregorio Abreu</p>
-    </footer>
+</nav>
+<div class="container">
+    <h1 class="chroma-effect"><span>Product Register</span></h1>
+    <br/>
+    <form id="RegisterProducts">
+        <div class="form-floating mb-1">
+            <input type="text" class="input_form" id="product" placeholder="Product">
+        </div>
+        <div class="form-floating mb-1">
+            <input type="text" class="input_form" id="unitCost" placeholder="Unit Cost">
+        </div>
+        <div class="form-floating mb-1">
+            <input type="text" class="input_form" id="salePrice" placeholder="Sale Price">
+        </div>
+        <div class="form-floating mb-1">
+            <select class="productClass" id="productClass" aria-label="Product Class">
+                <option selected>Product Class</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Office supplies">Office supplies</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Estationary">Estationary</option>
+            </select>
+        </div>
+        <button type="button" class="glow-on-hover" onclick="addProduct()">Cadastrar</button>
+    </form>
+    <br/>
+    <h1> </h1>
+    <br/>
+    <table id="TableProducts">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Product</th>
+            <th scope="col">Unit Cost</th>
+            <th scope="col">Class</th>
+            <th scope="col">Sale Price</th>
+            <th scope="col">Taxes</th>
+            <th scope="col">Profit</th>
+            <th scope="col">Profit Margin</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<footer>
+    <p>Equipe: Felipe Sidooski / Fellype Bardales / Gregorio Abreu</p>
+</footer>
 </body>
 </html>

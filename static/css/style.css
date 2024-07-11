@@ -213,3 +213,18 @@ footer {
     display: inline-block;
     animation: chroma 7s infinite alternate;
 }
+
+
+.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#budget{
+    color: #ffffff;
+}
+
+#profit_forecast{
+    color: #ffffff;
+}

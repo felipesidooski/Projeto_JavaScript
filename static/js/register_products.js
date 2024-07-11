@@ -97,6 +97,7 @@ class Product {
         var cellProfit = row.insertCell(8);
         var cellProfitMargin = row.insertCell(9);
         var cellDateTime = row.insertCell(10);
+        var cellDelete = row.insertCell(11);
 
         cellRow.innerHTML = table.rows.length - 1;
         cellProduct.innerHTML = this.product;
@@ -109,8 +110,64 @@ class Product {
         cellProfit.innerHTML = '$' + this.profit.toFixed(2);
         cellProfitMargin.innerHTML = this.profit_margin.toFixed(2) + '%';
         cellDateTime.innerHTML = this.getCurrentDateTime();
+        //Delete Button
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "-";
+        deleteButton.classList.add("btn", "btn-danger");
+        deleteButton.onclick = function() {
+            removeProductFromTableAndLocalStorage(this);
+        };
+        cellDelete.appendChild(deleteButton);
     }
 }
+
+
+function saveProductToLocalStorage(product) {
+    // Obter a lista atual de produtos do LocalStorage
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    
+    // Adicionar o novo produto à lista
+    products.push(product);
+    
+    // Salvar a lista atualizada de volta ao LocalStorage
+    localStorage.setItem('products', JSON.stringify(products));
+}
+
+
+//Function to calculate the profit forecast and total cost
+function calculateTotals() {
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let totalUnitCost = 0;
+    let totalProfit = 0;
+    products.forEach(product => {
+        // Calculated the total cost and profit forecast
+        totalUnitCost += product.unit_cost;
+        totalProfit += product.profit;
+    });
+    document.getElementById('budget').innerText = `Budget Forecast: $${totalUnitCost.toFixed(2)}`;
+    document.getElementById('profit_forecast').innerText = `Profit Forecast: $${totalProfit.toFixed(2)}`;
+}
+
+
+// Function to remove product from LocalStorage
+function removeProductFromLocalStorage(productValue) {
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let productIndex = products.findIndex(p => p.product === productValue);
+    if (productIndex !== -1) {
+        products.splice(productIndex, 1); // Remove o produto encontrado
+        localStorage.setItem('products', JSON.stringify(products)); // Atualiza o LocalStorage
+    }
+}
+
+// Function to remove product from the table and LocalStorage
+function removeProductFromTableAndLocalStorage(button) {
+    var row = button.parentNode.parentNode;
+    var productValue = row.cells[1].innerText; // Assume que o nome do produto está na segunda célula
+    row.parentNode.removeChild(row); // Remove a linha da tabela
+    removeProductFromLocalStorage(productValue); // Remove o produto do LocalStorage
+    calculateTotals(); // Atualiza os totais
+}
+
 
 async function addProduct() {
     var product = document.getElementById('product').value;
@@ -146,6 +203,13 @@ async function addProduct() {
     newProduct.profit = newProduct.calculateProfit();
     newProduct.profit_margin = newProduct.calculateProfitMargin();
 
+    // Check if the product is already registered
+    var products = JSON.parse(localStorage.getItem('products')) || [];
+    if (products.some(p => p.product === product)) {
+        alert('This product is already registered!');
+        return;
+    }
+
     var table = document.getElementById('TableProducts');
     for (var i = 1; i < table.rows.length; i++) {
         if (table.rows[i].cells[1].innerHTML === product) {
@@ -153,12 +217,61 @@ async function addProduct() {
             return;
         }
     }
-
+    // Save product on the table
     await newProduct.register();
 
+    // Save new product to LocalStorage
+    saveProductToLocalStorage({
+        product: newProduct.product,
+        unit_cost: newProduct.unit_cost,
+        sale_price: newProduct.sale_price,
+        classification: newProduct.classification,
+        profit: newProduct.profit,
+        profit_margin: newProduct.profit_margin,
+        cepOrigin: newProduct.cepOrigin,
+        state_taxes: newProduct.state_taxes,
+        state: newProduct.state,
+        dateTime: newProduct.getCurrentDateTime()
+    });
+
+    //Update the total cost and profit forecast
+    calculateTotals();
+
+    // Clear the form fields
     document.getElementById('product').value = '';
     document.getElementById('unitCost').value = '';
     document.getElementById('salePrice').value = '';
     document.getElementById('productClass').value = '';
     document.getElementById('cepOrigin').value = '';
 }
+
+
+//Function to load products from LocalStorage
+function loadProductsFromLocalStorage() {
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let totalUnitCost = 0;
+    let totalProfit = 0;
+
+    //Process to fill the table with the products
+    products.forEach(p => {
+        let product = new Product(p.product, p.unit_cost, p.sale_price, p.classification, p.cepOrigin);
+        product.state = p.state; 
+        product.state_taxes = p.state_taxes; 
+        product.profit = p.profit; 
+        product.profit_margin = p.profit_margin;
+        product.register(); // add product to the table
+        // Calculated the total cost and profit forecast
+        totalUnitCost += product.unit_cost;
+        totalProfit += product.profit;
+    });
+
+    // Atualiza os elementos h1 com os totais calculados
+    document.getElementById('budget').innerText = `Budget Forecast: $${totalUnitCost.toFixed(2)}`;
+    document.getElementById('profit_forecast').innerText = `Profit Forecast: $${totalProfit.toFixed(2)}`;
+}
+
+
+//Initial load of products from LocalStorage
+window.onload = function() {
+    loadProductsFromLocalStorage();
+};
